@@ -6,6 +6,8 @@ using System.Globalization;
 using Microsoft.AspNet.SignalR.Client.Infrastructure;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client
 {
 #if !PORTABLE
@@ -61,3 +63,5 @@ namespace Microsoft.AspNet.SignalR.Client
     }
 #endif
 }
+
+#endif

@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR.Client.Http;
 using Microsoft.AspNet.SignalR.Client.Infrastructure;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Transports
 {
     public class AutoTransport : IClientTransport
@@ -207,3 +209,4 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
         }
     }
 }
+#endif

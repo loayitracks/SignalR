@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR.Client.Transports;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Newtonsoft.Json.Linq;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Infrastructure
 {
     internal class TransportInitializationHandler
@@ -169,3 +171,5 @@ namespace Microsoft.AspNet.SignalR.Client.Infrastructure
         }
     }
 }
+
+#endif

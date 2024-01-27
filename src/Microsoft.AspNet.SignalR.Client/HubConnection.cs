@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client.Hubs;
 using Newtonsoft.Json.Linq;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client
 {
     /// <summary>
@@ -251,3 +253,4 @@ namespace Microsoft.AspNet.SignalR.Client
         }
     }
 }
+#endif

@@ -21,6 +21,8 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client
 {
     /// <summary>
@@ -532,7 +534,7 @@ namespace Microsoft.AspNet.SignalR.Client
 
                 return StartTransport();
             }
-
+            _connectionData = OnSending();
             Task StartNegotiation()
             {
                 return transport.Negotiate(this, _connectionData)
@@ -588,8 +590,6 @@ namespace Microsoft.AspNet.SignalR.Client
                                 })
                                 .ContinueWithNotComplete(() => Disconnect());
             }
-
-            _connectionData = OnSending();
 
             return StartNegotiation();
         }
@@ -1004,7 +1004,7 @@ namespace Microsoft.AspNet.SignalR.Client
         void IConnection.PrepareRequest(IRequest request)
         {
             // PORT: Previously, this string differed based on the platform the app was running on (NET4, NET45,, etc.). Now it will always be NetStadnard.
-            request.UserAgent = CreateUserAgentString("SignalR.Client.NetStandard");
+            request.UserAgent = CreateUserAgentString("SignalR.Client");
             request.SetRequestHeaders(Headers);
         }
 
@@ -1121,3 +1121,5 @@ namespace Microsoft.AspNet.SignalR.Client
         }
     }
 }
+
+#endif

@@ -45,4 +45,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="$(ReleaseNetStandard20_NewtonsoftJsonPackageVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="v122\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="v122\" />
+  </ItemGroup>
 </Project>

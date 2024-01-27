@@ -10,6 +10,8 @@ using Microsoft.AspNet.SignalR.Client.Infrastructure;
 using Microsoft.AspNet.SignalR.Client.Transports.ServerSentEvents;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Transports
 {
     public class ServerSentEventsTransport : HttpBasedTransport
@@ -97,7 +99,7 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
 
             connection.Trace(TraceLevels.Events, "SSE: GET {0}", url);
 
-            var getTask = HttpClient.Get(url, req =>
+            var getTask = HttpClient.Get_v122(url, req =>
             {
                 _request = req;
                 _request.Accept = "text/event-stream";
@@ -212,3 +214,5 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
         }
     }
 }
+
+#endif

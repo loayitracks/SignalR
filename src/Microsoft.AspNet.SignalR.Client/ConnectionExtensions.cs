@@ -8,6 +8,8 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client
 {
     public static class ConnectionExtensions
@@ -107,3 +109,4 @@ namespace Microsoft.AspNet.SignalR.Client
 #endif
     }
 }
+#endif

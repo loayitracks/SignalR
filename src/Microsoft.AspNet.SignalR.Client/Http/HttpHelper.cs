@@ -11,76 +11,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Http
 {
     internal static class HttpHelper
     {
-#if NET40
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Exceptions are flowed back to the caller.")]
         public static Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request)
         {
             try
             {
-                return Task.Factory.FromAsync(request.BeginGetResponse, ar => (HttpWebResponse)request.EndGetResponse(ar), null);
+                return Task.Factory.FromAsync<HttpWebResponse>(request.BeginGetResponse, ar => (HttpWebResponse)request.EndGetResponse(ar), null);
             }
             catch (Exception ex)
             {
                 return TaskAsyncHelper.FromError<HttpWebResponse>(ex);
             }
         }
-
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Exceptions are flowed back to the caller.")]
-        public static Task<Stream> GetHttpRequestStreamAsync(this HttpWebRequest request)
-        {
-            try
-            {
-                return Task.Factory.FromAsync<Stream>(request.BeginGetRequestStream, request.EndGetRequestStream, null);
-            }
-            catch (Exception ex)
-            {
-                return TaskAsyncHelper.FromError<Stream>(ex);
-            }
-        }
-
-        public static Task<HttpWebResponse> GetAsync(string url, Action<HttpWebRequest> requestPreparer)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            if (requestPreparer != null)
-            {
-                requestPreparer(request);
-            }
-            return request.GetHttpResponseAsync();
-        }
-
-        public static Task<HttpWebResponse> PostAsync(string url, Action<HttpWebRequest> requestPreparer, IDictionary<string, string> postData)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-
-            if (requestPreparer != null)
-            {
-                requestPreparer(request);
-            }
-
-            byte[] buffer = ProcessPostData(postData);
-
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            // Set the content length if the buffer is non-null
-            request.ContentLength = buffer != null ? buffer.LongLength : 0;
-
-            if (buffer == null)
-            {
-                // If there's nothing to be written to the request then just get the response
-                return request.GetHttpResponseAsync();
-            }
-
-            // Write the post data to the request stream
-            return request.GetHttpRequestStreamAsync()
-                .Then(stream => stream.WriteAsync(buffer, 0, buffer.Length).Then(() => stream.Dispose()))
-                .Then(() => request.GetHttpResponseAsync());
-        }
-#endif
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Text.StringBuilder.AppendFormat(System.String,System.Object[])", Justification = "This will never be localized.")]
         public static byte[] ProcessPostData(IDictionary<string, string> postData)
@@ -110,3 +58,5 @@ namespace Microsoft.AspNet.SignalR.Client.Http
         }
     }
 }
+
+#endif

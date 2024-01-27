@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Hubs
 {
     public class HubProxy : IHubProxy
@@ -209,3 +211,4 @@ namespace Microsoft.AspNet.SignalR.Client.Hubs
         }
     }
 }
+#endif

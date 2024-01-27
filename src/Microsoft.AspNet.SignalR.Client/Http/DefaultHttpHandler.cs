@@ -13,12 +13,7 @@ namespace Microsoft.AspNet.SignalR.Client.Http
 {
 #if NET45
     public class DefaultHttpHandler : WebRequestHandler
-#elif NETSTANDARD1_3 || NETSTANDARD2_0
-    public class DefaultHttpHandler : HttpClientHandler
-#else
-#error Unsupported target framework.
-#endif
-    {
+        {
         private readonly IConnection _connection;
 
         public DefaultHttpHandler(IConnection connection)
@@ -51,11 +46,49 @@ namespace Microsoft.AspNet.SignalR.Client.Http
             }
         }
     }
+#elif NETSTANDARD1_3 || NETSTANDARD2_0
+    public class DefaultHttpHandler : HttpClientHandler
+     {
+        private readonly IConnection _connection;
+        public DefaultHttpHandler(IConnection connection)
+        {
+            if (connection != null)
+            {
+                _connection = connection;
+            }
+            else
+            {
+                throw new ArgumentNullException("connection");
+            }
+
+            Credentials = _connection.Credentials;
+            PreAuthenticate = true;
+
+            if (_connection.CookieContainer != null)
+            {
+                CookieContainer = _connection.CookieContainer;
+            }
+
+            if (_connection.Proxy != null)
+            {
+                Proxy = _connection.Proxy;
+            }
+
+            foreach (X509Certificate cert in _connection.Certificates)
+            {
+                ClientCertificates.Add(cert);
+            }
+        }
+    }
+#else
+#error Unsupported target framework.
+#endif
+
 }
 
 #elif NET40
 // Not required on this framework.
-#else 
+#else
 #error Unsupported target framework.
 #endif
 

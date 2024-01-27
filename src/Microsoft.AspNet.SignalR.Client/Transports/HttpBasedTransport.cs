@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR.Client.Http;
 using Microsoft.AspNet.SignalR.Client.Infrastructure;
 using Newtonsoft.Json.Linq;
 
+#if !NET40 && !NETSTANDARD1_3
+
 namespace Microsoft.AspNet.SignalR.Client.Transports
 {
     public abstract class HttpBasedTransport : ClientTransportBase
@@ -43,3 +45,5 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
         }
     }
 }
+
+#endif
