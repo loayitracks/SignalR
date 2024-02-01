@@ -30,4 +30,7 @@
     <!-- Only used in .NET 4.0, but it's got #if defs so it doesn't need to be conditional -->
     <Compile Include="..\Common\AssemblyMetadataAttribute.cs" Link="AssemblyMetadataAttribute.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 </Project>

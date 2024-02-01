@@ -99,7 +99,7 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
 
             connection.Trace(TraceLevels.Events, "SSE: GET {0}", url);
 
-            var getTask = HttpClient.Get_v122(url, req =>
+            var getTask = HttpClient.Get(url, req =>
             {
                 _request = req;
                 _request.Accept = "text/event-stream";

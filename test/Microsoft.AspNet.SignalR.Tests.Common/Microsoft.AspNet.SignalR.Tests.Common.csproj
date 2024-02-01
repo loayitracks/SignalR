@@ -22,7 +22,7 @@
         <PackageReference Include="xunit.extensibility.execution" Version="$(XunitExtensibilityExecutionPackageVersion)" />
 
         <!-- Pull JSON.NET up to avoid downgrade warnings -->
-        <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonPackageVersion)" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
         <Reference Include="Microsoft.Build.Framework" />
         <Reference Include="Microsoft.Build.Utilities.v4.0" />

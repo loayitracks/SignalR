@@ -21,7 +21,7 @@
   </Choose>
   <ItemGroup>
     <PackageReference Include="CmdLine" Version="$(CmdLinePackageVersion)" />
-    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonPackageVersion)" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Owin" Version="$(OwinPackageVersion)" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

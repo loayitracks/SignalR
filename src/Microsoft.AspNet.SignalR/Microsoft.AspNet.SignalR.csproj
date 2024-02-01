@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Title>Microsoft ASP.NET SignalR</Title>
@@ -9,6 +9,10 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <DefineConstants>$(DefineConstants);CLIENT</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.AspNet.SignalR.JS\Microsoft.AspNet.SignalR.JS.csproj" />

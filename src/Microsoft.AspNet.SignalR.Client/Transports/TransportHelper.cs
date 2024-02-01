@@ -29,7 +29,7 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
             var negotiateUrl = UrlBuilder.BuildNegotiate(connection, connectionData);
 
             httpClient.Initialize(connection);
-            return httpClient.Get_v122(negotiateUrl, connection.PrepareRequest, isLongRunning: false)
+            return httpClient.Get(negotiateUrl, connection.PrepareRequest, isLongRunning: false)
                             .Then(response => response.ReadAsString())
                             .Then(raw =>
                             {
@@ -65,7 +65,7 @@ namespace Microsoft.AspNet.SignalR.Client.Transports
 
             var startUrl = UrlBuilder.BuildStart(connection, transport, connectionData);
 
-            return httpClient.Get_v122(startUrl, connection.PrepareRequest, isLongRunning: false)
+            return httpClient.Get(startUrl, connection.PrepareRequest, isLongRunning: false)
                             .Then(response => response.ReadAsString());
         }
 

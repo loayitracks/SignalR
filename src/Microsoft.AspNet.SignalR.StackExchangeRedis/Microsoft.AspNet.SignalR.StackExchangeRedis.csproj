@@ -10,6 +10,7 @@
     <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="StackExchange.Redis" Version="$(StackExchangeRedisPackageVersion)" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.IO.Compression" />

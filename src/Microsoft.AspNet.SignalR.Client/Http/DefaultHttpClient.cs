@@ -70,67 +70,13 @@ namespace Microsoft.AspNet.SignalR.Client.Http
         }
 
         /// <summary>
-        /// Makes an asynchronous http GET request to the specified url.
-        /// </summary>
-        /// <param name="url">The url to send the request to.</param>
-        /// <param name="prepareRequest">A callback that initializes the request with default values.</param>
-        /// <param name="isLongRunning">Indicates whether the request is long running</param>
-        /// <returns>A <see cref="T:Task{IResponse}"/>.</returns>
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Handler cannot be disposed before response is disposed")]
-        public async Task<IResponse> Get(string url, Action<IRequest> prepareRequest, bool isLongRunning)
-        {
-            if (prepareRequest == null)
-            {
-                throw new ArgumentNullException("prepareRequest");
-            }
-
-            var responseDisposer = new Disposer();
-            var cts = new CancellationTokenSource();
-
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
-
-            var request = new HttpRequestMessageWrapper(requestMessage, () =>
-            {
-                cts.Cancel();
-                responseDisposer.Dispose();
-            });
-
-            prepareRequest(request);
-
-            var httpClient = GetHttpClient(isLongRunning);
-
-            var res = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cts.Token)
-                 .Then(responseMessage =>
-                 {
-                     if (responseMessage.IsSuccessStatusCode)
-                     {
-                         responseDisposer.Set(responseMessage);
-                     }
-                     else
-                     {
-                         // Dispose the response (https://github.com/SignalR/SignalR/issues/4092)
-                         responseMessage.RequestMessage.Dispose();
-                         responseMessage.Dispose();
-
-                         // None of the getters on HttpResponseMessage throw ODE, so it should be safe to give the catcher of the exception
-                         // access to the response. They may get an ODE if they try to read the body, but that's OK.
-                         throw new HttpClientException(responseMessage);
-                     }
-
-                     return (IResponse)new HttpResponseMessageWrapper(responseMessage);
-                 });
-
-            return res;
-        }
-
-        /// <summary>
         /// Makes an asynchronous http GET request to the specified url (Copeid from Microsoft.AspNet.SignalR.Client v 1.2.2)
         /// </summary>
         /// <param name="url">The url to send the request to.</param>
         /// <param name="prepareRequest">A callback that initializes the request with default values.</param>
         /// <param name="isLongRunning">Indicates whether it is a long running request</param>
         /// <returns>A <see cref="T:Task{IResponse}"/>.</returns>
-        public Task<IResponse> Get_v122(string url, Action<IRequest> prepareRequest, bool isLongRunning)
+        public Task<IResponse> Get(string url, Action<IRequest> prepareRequest, bool isLongRunning)
         {
             var responseDisposer = new Disposer();
             var cts = new CancellationTokenSource();

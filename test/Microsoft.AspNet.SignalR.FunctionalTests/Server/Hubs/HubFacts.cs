@@ -64,9 +64,10 @@ namespace Microsoft.AspNet.SignalR.Tests
         [InlineData(HostType.HttpListener, TransportType.Websockets, MessageBusType.Default)]
         public async Task ReadingStateFromVB(HostType hostType, TransportType transportType, MessageBusType messageBusType)
         {
+#if false
             // Force the VB Sample assembly to be loaded into the current AppDomain for MemoryHost
             var foo = new Microsoft.AspNet.SignalR.Samples.VB.VBDemoHub();
-
+#endif
             using (var host = CreateHost(hostType, transportType))
             {
                 var mre = new TaskCompletionSource<object>();

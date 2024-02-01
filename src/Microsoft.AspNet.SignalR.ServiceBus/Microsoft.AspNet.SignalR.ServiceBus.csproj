@@ -10,6 +10,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="WindowsAzure.ServiceBus" Version="$(WindowsAzureServiceBusPackageVersion)" />
   </ItemGroup>
   <ItemGroup>

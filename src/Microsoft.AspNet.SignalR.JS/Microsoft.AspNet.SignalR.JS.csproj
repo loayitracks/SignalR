@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="jQuery" Version="$(jQueryPackageVersion)" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,14 +38,10 @@
   </ItemGroup>
 
   <Target Name="CompileJs" BeforeTargets="Build" Inputs="@(JSCompile)" Outputs="@(GeneratedJavaScript)">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass .\build.ps1 $(OutputPath) -version $(PackageVersion)"
-          WorkingDirectory="$(ProjectDir)"
-          Condition=" '$(OS)' == 'Windows_NT'" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass .\build.ps1 $(OutputPath) -version $(PackageVersion)" WorkingDirectory="$(ProjectDir)" Condition=" '$(OS)' == 'Windows_NT'" />
   </Target>
 
   <Target Name="PackJs" AfterTargets="Pack">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass .\pack.ps1 $(OutputPath) -packageOutputPath $(PackageOutputPath) -version $(PackageVersion)"
-          WorkingDirectory="$(ProjectDir)"
-          Condition=" '$(OS)' == 'Windows_NT'" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass .\pack.ps1 $(OutputPath) -packageOutputPath $(PackageOutputPath) -version $(PackageVersion)" WorkingDirectory="$(ProjectDir)" Condition=" '$(OS)' == 'Windows_NT'" />
   </Target>
 </Project>
